@@ -33,37 +33,39 @@ public class RestService {
     private String getId;
 
     @Value("${api.url.get}")
-    private String get;
+    private String getAll;
 
-    public int post(ProductDTO productDTO){
+    public ResponseEntity<Boolean> post(ProductDTO productDTO){
 
-        ResponseEntity<Object> exchange = restTemplate.exchange(post, HttpMethod.POST, new HttpEntity<>(productDTO), Object.class);
-
-        return exchange.getStatusCode().value();
+        return restTemplate.exchange(post, HttpMethod.POST, new HttpEntity<>(productDTO), Boolean.class);
 
     }
 
-    public void put(ProductDTO productDTO){
+    public ResponseEntity<Boolean> put(ProductDTO productDTO){
 
-        restTemplate.put(put, HttpMethod.PUT, new HttpEntity<>(productDTO));
+        return restTemplate.exchange(put, HttpMethod.PUT, new HttpEntity<>(productDTO), Boolean.class);
 
     }
 
-    public void delete(int id) {
+    public ResponseEntity<Boolean> delete(int id) {
 
-        restTemplate.delete(delete+id);
+        return restTemplate.exchange(delete, HttpMethod.DELETE, ResponseEntity.EMPTY, Boolean.class, id);
 
     }
 
     public ProductDTO getById(int id) {
 
-        return restTemplate.getForObject(getId + id, ProductDTO.class);
+        return restTemplate.getForObject(getId, ProductDTO.class,id);
 
     }
 
-    public List get(ProductCriteria productCriteria) {
+    public ResponseEntity<List<ProductDTO>> get(ProductCriteria productCriteria) {
 
-       return restTemplate.getForObject(get,List.class,productCriteria);
+        ResponseEntity<List<ProductDTO>> exchange = restTemplate.exchange(getAll, HttpMethod.GET, new HttpEntity<>(productCriteria), new ParameterizedTypeReference<>() {
+        });
+
+        return exchange;
+
 
     }
 }

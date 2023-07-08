@@ -6,8 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProductCriteria {
-
-    private Long page;
-    private Long size;
+    private int page;
+    private int size;
 
 }

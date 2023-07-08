@@ -7,51 +7,51 @@ import org.springframework.web.bind.annotation.*;
 import uz.pdp.apiTemplate.dto.ProductCriteria;
 import uz.pdp.apiTemplate.dto.ProductDTO;
 import uz.pdp.apiTemplate.service.RestService;
+import uz.pdp.apiTemplate.service.WebClientService;
 
 import java.util.List;
 
 @org.springframework.web.bind.annotation.RestController
-@RequestMapping("/rest")
-public class RestController {
+@RequestMapping("/webClient")
+public class WebClientController {
 
     @Autowired
-    RestService restService;
+    WebClientService webClientService;
 
     @PostMapping
-    public HttpEntity<?> add(@RequestBody ProductDTO productDTO){
+    public boolean add(@RequestBody ProductDTO productDTO){
 
-        return restService.post(productDTO);
+        return webClientService.post(productDTO);
 
     }
 
     @PutMapping
-    public HttpEntity<?> edit(@RequestBody ProductDTO productDTO){
+    public boolean edit(@RequestBody ProductDTO productDTO){
 
-        return restService.put(productDTO);
-
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public HttpEntity<?> delete(@PathVariable int id){
-
-        return restService.delete(id);
+        return webClientService.put(productDTO);
 
     }
 
+    @DeleteMapping("/{id}")
+    public boolean delete(@PathVariable int id){
+
+        return webClientService.delete(id);
+
+    }
 
     @GetMapping("/{id}")
     public HttpEntity<?> getById(@PathVariable int id){
 
-        ProductDTO byId = restService.getById(id);
+        ProductDTO byId = webClientService.getById(id);
 
         return ResponseEntity.ok(byId);
 
     }
 
     @GetMapping("/list")
-    public HttpEntity<?> get(@RequestBody ProductCriteria productCriteria ){
+    public List<?> get(@RequestBody ProductCriteria productCriteria ){
 
-        return restService.get(productCriteria);
+        return webClientService.get(productCriteria);
 
     }
 
