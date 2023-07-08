@@ -1,0 +1,8 @@
+api:
+    url:
+        basic: http://localhost:9595
+        post: ${api.url.basic}/v1/product/create
+        put: ${api.url.basic}/v1/product/update
+        delete: ${api.url.basic}/v1/product/delete/
+        getId: ${api.url.basic}/v1/product/get/
+        get: ${api.url.basic}/v1/product/list
